@@ -1,8 +1,8 @@
 {
   "scripts": {
+    "start": "npm run build && NODE_ENV=production node dist/app.js",
     "dev": "nodemon --ext ts --exec ts-node src/app.ts",
-    "build": "tsc",
-    "start": "node dist/app.js"
+    "build": "tsc"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",
