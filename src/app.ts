@@ -28,6 +28,8 @@ const PORT = process.env.PORT || 5000;
 
 if(process.env.NODE_ENV === "production")
   {
+    (async () => {
+      await connect();
       const httpsServer = https.createServer({
           key: fs.readFileSync(process.env.SSL_KEY_PATH!),
           cert: fs.readFileSync(process.env.SSL_CERT_PATH!),
@@ -37,7 +39,7 @@ if(process.env.NODE_ENV === "production")
           console.log(`Server is running on port ${PORT}`);
       }).on('error', (err:any) => {
           console.error('Error starting the server:', err);
-      });
+      })})();
   }
   else
   {
