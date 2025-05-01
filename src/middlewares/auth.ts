@@ -1,43 +1,37 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import User from '../models/User';
 import UserRequest from '../types/userRequest';
 
-const authenticateToken = (req: UserRequest, res: Response, next: NextFunction): void => {
+export const authMiddleware = async (req: UserRequest, res: Response, next: NextFunction): Promise<void> => {
     const token = req.header('Authorization');
-    if (!token){
+    if (!token) {
         res.status(401).json({ message: 'Access Denied' });
-        return
+        return;
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-      
-        let userId: string | undefined;
-      
-        if (typeof decoded === 'string') {
-          userId = decoded;
-        } else if (decoded && (decoded as JwtPayload).sub) {
-          userId = (decoded as JwtPayload).sub as string;
-        }
-      
+        const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET as string);
+
+        const userId = typeof decoded === 'string'
+            ? decoded
+            : (decoded as JwtPayload).id;
+
         if (!userId) {
-            res.status(401).json({ message: 'Invalid token' });
+            res.status(401).json({ message: "Invalid token" });
+            return;
         }
-      
-        User.findByPk(userId).then((user) => {
-          if (user) {
-            req.user = user;
-            next();
-          } else {
+
+        const user = await User.findByPk(userId);
+
+        if (!user) {
             res.status(401).json({ message: "User not found" });
-          }
-        });
+            return;
+        }
 
+        req.user = user;
         next();
-      } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
-      }
+    } catch (error) {
+        res.status(401).json({ message: "Invalid token" });
+    }
 };
-
-export default authenticateToken;

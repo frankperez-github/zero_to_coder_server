@@ -8,5 +8,6 @@ const Users_1 = require("../controllers/Users");
 const router = express_1.default.Router();
 router.post('/register', Users_1.register);
 router.post('/login', Users_1.login);
-router.get('/', Users_1.getMyUser);
+router.get('/me', Users_1.getMyUser);
+router.post('/me/topic', Users_1.addPassedTopic);
 exports.default = router;

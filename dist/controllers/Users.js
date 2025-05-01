@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMyUser = exports.login = exports.register = void 0;
+exports.addPassedTopic = exports.getMyUser = exports.login = exports.register = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -49,28 +49,23 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.login = login;
 const getMyUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
-        const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
-        if (!token) {
-            res.status(401).json({ message: 'Token is required' });
-            return;
-        }
-        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        const userId = decoded.id;
-        if (!userId) {
-            res.status(401).json({ message: 'Invalid token' });
-            return;
-        }
-        const user = yield User_1.default.findByPk(userId);
-        if (!user) {
-            res.status(404).json({ message: 'User not found' });
-            return;
-        }
-        res.status(200).json(user);
+        res.status(200).json(req.user);
     }
     catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 exports.getMyUser = getMyUser;
+const addPassedTopic = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = req.user;
+        const updatedUser = yield (user === null || user === void 0 ? void 0 : user.update(Object.assign(Object.assign({}, user), { passedTopics: [...user === null || user === void 0 ? void 0 : user.passedTopics, req.body.topic] })));
+        updatedUser === null || updatedUser === void 0 ? void 0 : updatedUser.save();
+        res.status(200).json(updatedUser);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.addPassedTopic = addPassedTopic;

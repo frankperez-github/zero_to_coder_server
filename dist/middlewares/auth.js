@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../models/User"));
+const inspector_1 = require("inspector");
 const authenticateToken = (req, res, next) => {
     const token = req.header('Authorization');
     if (!token) {
@@ -13,6 +14,7 @@ const authenticateToken = (req, res, next) => {
     }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        inspector_1.console.log(decoded);
         let userId;
         if (typeof decoded === 'string') {
             userId = decoded;
@@ -35,6 +37,7 @@ const authenticateToken = (req, res, next) => {
         next();
     }
     catch (error) {
+        inspector_1.console.log(error);
         res.status(401).json({ message: 'Invalid token' });
     }
 };

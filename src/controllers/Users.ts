@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import UserRequest from '../types/userRequest';
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -35,25 +36,23 @@ export const login = async (req: Request, res: Response) => {
     }
 };
 
-export const getMyUser = async (req: Request, res: Response) => {
+export const getMyUser = async (req: UserRequest, res: Response) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            res.status(401).json({ message: 'Token is required' });
-            return
-        }
-        const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
-        const userId = decoded.id;
-        if (!userId) {
-            res.status(401).json({ message: 'Invalid token' });
-            return
-        }
-        const user = await User.findByPk(userId);
-        if (!user) {
-            res.status(404).json({ message: 'User not found' });
-            return
-        }
-        res.status(200).json(user);
+        res.status(200).json(req.user);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+export const addPassedTopic = async (req: UserRequest, res: Response) => {
+    try {
+        const user = req.user;
+        const updatedUser = await user?.update({
+            ...user,
+            passedTopics: [...user?.passedTopics, req.body.topic]
+        })
+        updatedUser?.save()
+        res.status(200).json(updatedUser);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
