@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addPassedTopic = exports.getMyUser = exports.login = exports.register = void 0;
+exports.getPassedTopics = exports.addPassedTopic = exports.getMyUser = exports.login = exports.register = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -69,3 +69,17 @@ const addPassedTopic = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.addPassedTopic = addPassedTopic;
+const getPassedTopics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = req.user;
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        res.status(200).json({ topics: user.passedTopics });
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.getPassedTopics = getPassedTopics;

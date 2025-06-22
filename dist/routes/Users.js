@@ -11,4 +11,5 @@ router.post('/register', Users_1.register);
 router.post('/login', Users_1.login);
 router.get('/me', auth_1.authMiddleware, Users_1.getMyUser);
 router.post('/me/topic', Users_1.addPassedTopic);
+router.get('/me/passed-topics', auth_1.authMiddleware, Users_1.getPassedTopics);
 exports.default = router;

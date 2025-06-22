@@ -56,7 +56,7 @@ const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield exports.sequelize.authenticate();
         console.log('Connected to MySQL');
-        yield exports.sequelize.sync({ alter: true });
+        yield exports.sequelize.sync({ alter: false });
         console.log('Models synchronized');
         exports.connection.isConnected = 1;
         exports.connection.sequelize = exports.sequelize;

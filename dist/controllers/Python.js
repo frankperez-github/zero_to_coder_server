@@ -17,7 +17,7 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const child_process_1 = require("child_process");
 const uuid_1 = require("uuid");
-const TEMP_DIR = path_1.default.join(__dirname, '..', 'temp');
+const TEMP_DIR = '/shared-volume';
 if (!fs_1.default.existsSync(TEMP_DIR))
     fs_1.default.mkdirSync(TEMP_DIR);
 const executePython = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,26 +43,25 @@ exports.executePython = executePython;
 const runPythonCode = (code) => {
     return new Promise((resolve) => {
         const fileId = (0, uuid_1.v4)();
-        const filePath = path_1.default.join(TEMP_DIR, `${fileId}.py`);
+        const tempPath = path_1.default.join(TEMP_DIR, `${fileId}.py`);
+        const containerFile = path_1.default.join(TEMP_DIR, 'user_script.py');
         try {
-            fs_1.default.writeFileSync(filePath, code);
-            const dockerCmd = `docker run --rm -v "${filePath}:/app/user_script.py:ro" --network=none --memory=100m --cpus=0.5 python-sandbox`;
-            (0, child_process_1.exec)(dockerCmd, { timeout: 7000 }, (error, stdout, stderr) => {
-                // Clean up the file regardless of the outcome
-                fs_1.default.unlink(filePath, () => { });
+            fs_1.default.writeFileSync(tempPath, code);
+            fs_1.default.copyFileSync(tempPath, path_1.default.join(TEMP_DIR, 'user_script.py'));
+            const dockerCmd = `docker run --rm -v "code-storage:/app/code" python-sandbox`;
+            (0, child_process_1.exec)(dockerCmd, (error, stdout, stderr) => {
+                // Clean up both files after execution
+                fs_1.default.unlink(containerFile, () => { });
+                fs_1.default.unlink(tempPath, () => { });
                 if (error) {
-                    if (error.killed) {
-                        resolve({
-                            success: false,
-                            output: { stdout, stderr: 'Execution timed out.', error: error.message }
-                        });
-                    }
-                    else {
-                        resolve({
-                            success: false,
-                            output: { stdout, stderr, error: error.message }
-                        });
-                    }
+                    resolve({
+                        success: false,
+                        output: {
+                            stdout,
+                            stderr: error.killed ? 'Execution timed out.' : stderr,
+                            error: error.message
+                        }
+                    });
                 }
                 else {
                     resolve({
@@ -73,6 +72,9 @@ const runPythonCode = (code) => {
             });
         }
         catch (err) {
+            // Clean up temp files in case of exception too
+            fs_1.default.unlink(containerFile, () => { });
+            fs_1.default.unlink(tempPath, () => { });
             resolve({
                 success: false,
                 output: { stdout: null, stderr: 'Internal server error.', details: err.message }

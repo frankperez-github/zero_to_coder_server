@@ -18,7 +18,7 @@ const User_1 = __importDefault(require("../models/User"));
 const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.header('Authorization');
     if (!token) {
-        res.status(401).json({ message: 'Access Denied' });
+        res.status(403).json({ message: 'Access Denied' });
         return;
     }
     try {
@@ -27,19 +27,19 @@ const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             ? decoded
             : decoded.id;
         if (!userId) {
-            res.status(401).json({ message: "Invalid token" });
+            res.status(403).json({ message: "Invalid token" });
             return;
         }
         const user = yield User_1.default.findByPk(userId);
         if (!user) {
-            res.status(401).json({ message: "User not found" });
+            res.status(403).json({ message: "User not found" });
             return;
         }
         req.user = user;
         next();
     }
     catch (error) {
-        res.status(401).json({ message: "Invalid token" });
+        res.status(403).json({ message: "Invalid token" });
     }
 });
 exports.authMiddleware = authMiddleware;

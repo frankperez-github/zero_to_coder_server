@@ -19,7 +19,6 @@ const https_1 = __importDefault(require("https"));
 const fs_1 = __importDefault(require("fs"));
 const database_1 = require("./database");
 const Users_1 = __importDefault(require("./routes/Users"));
-const Tests_1 = __importDefault(require("./routes/Tests"));
 const Graph_1 = __importDefault(require("./routes/Graph"));
 const Questions_1 = __importDefault(require("./routes/Questions"));
 const Python_1 = __importDefault(require("./routes/Python"));
@@ -33,7 +32,6 @@ app.use((0, cors_1.default)({
 }));
 // Routes
 app.use('/api/users', Users_1.default);
-app.use('/api/tests', Tests_1.default);
 app.use('/api/questions', Questions_1.default);
 app.use('/api/graph', Graph_1.default);
 app.use('/api/python', Python_1.default);

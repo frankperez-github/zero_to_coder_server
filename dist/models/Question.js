@@ -28,10 +28,11 @@ Question.init({
             }
         }
     },
-    options: { type: sequelize_1.DataTypes.JSON, allowNull: false },
-    answer: { type: sequelize_1.DataTypes.TEXT, allowNull: false },
+    options: { type: sequelize_1.DataTypes.JSON, allowNull: false, defaultValue: [] },
+    answer: { type: sequelize_1.DataTypes.TEXT, allowNull: true, defaultValue: '' },
     testCases: { type: sequelize_1.DataTypes.JSON, allowNull: false, defaultValue: [] },
     hint: { type: sequelize_1.DataTypes.TEXT, allowNull: false },
+    solutionSignature: { type: sequelize_1.DataTypes.STRING, allowNull: true },
     difficulty: { type: sequelize_1.DataTypes.ENUM('easy', 'medium', 'hard'), allowNull: false },
     explanation: { type: sequelize_1.DataTypes.TEXT, allowNull: false },
     text: { type: sequelize_1.DataTypes.TEXT, allowNull: false },

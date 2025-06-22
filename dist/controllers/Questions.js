@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.seedQuestions = exports.sortByTopicsLength = exports.runTestCases = exports.getStartingPoints = exports.getNextTopicsQuestions = exports.getNextQuestions = exports.markQuestionAsDone = exports.getQuestions = exports.createQuestion = void 0;
+exports.seedQuestions = exports.sortByTopicsLength = exports.runTestCases = exports.getStartingPoints = exports.getNextTopicsQuestions = exports.getNextQuestions = exports.getQuestions = exports.createQuestion = void 0;
 const Question_1 = __importDefault(require("../models/Question"));
 const questions_1 = require("../seeds/questions");
 const sequelize_1 = require("sequelize");
 const QuestionsGraph_1 = require("./QuestionsGraph");
 const Python_1 = require("./Python");
+const User_1 = __importDefault(require("../models/User"));
 const createQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const question = yield Question_1.default.create(req.body);
@@ -38,32 +39,11 @@ const getQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getQuestions = getQuestions;
-const markQuestionAsDone = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    try {
-        const { questionId } = req.params;
-        const question = yield Question_1.default.findByPk(questionId);
-        if (!question) {
-            res.status(404).json({ message: `Question with id ${questionId} not found` });
-            return;
-        }
-        if (question.doneByUsers && !question.doneByUsers.includes(((_a = req.user) === null || _a === void 0 ? void 0 : _a.id) + "")) {
-            yield question.update({
-                doneByUsers: [...(question.doneByUsers || []), (_b = req.user) === null || _b === void 0 ? void 0 : _b.id]
-            });
-        }
-        res.status(200).json(question);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
-    }
-});
-exports.markQuestionAsDone = markQuestionAsDone;
 const getNextQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c, _d;
     try {
         const { questionId } = req.params;
+        const { time } = req.body;
         const question = yield Question_1.default.findByPk(questionId);
         if (!question) {
             res.status(404).json({ message: `Question with id ${questionId} not found` });
@@ -82,6 +62,34 @@ const getNextQuestions = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 }
             }
         });
+        const user = yield User_1.default.findByPk((_b = req.user) === null || _b === void 0 ? void 0 : _b.id);
+        // Updated passed topics if answered on time
+        switch (question.difficulty) {
+            case "easy":
+                if (+time < 40)
+                    user === null || user === void 0 ? void 0 : user.update({
+                        passedTopics: [...user.passedTopics, ...question.topics]
+                    });
+                break;
+            case "medium":
+                if (+time < 120)
+                    user === null || user === void 0 ? void 0 : user.update({
+                        passedTopics: [...user.passedTopics, ...question.topics]
+                    });
+                break;
+            case "hard":
+                if (+time < 300)
+                    user === null || user === void 0 ? void 0 : user.update({
+                        passedTopics: [...user.passedTopics, ...question.topics]
+                    });
+                break;
+        }
+        // Mark question as done for this user
+        if (question.doneByUsers == null || !question.doneByUsers.includes(((_c = req.user) === null || _c === void 0 ? void 0 : _c.id) + "")) {
+            yield question.update({
+                doneByUsers: [...(question.doneByUsers || []), (_d = req.user) === null || _d === void 0 ? void 0 : _d.id]
+            });
+        }
         questions.sort(exports.sortByTopicsLength);
         res.status(200).json(questions);
     }
@@ -181,6 +189,16 @@ const runTestCases = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             const testCode = generateTestCode(userCode, inputParams, expectedOutput);
             // Execute the test
             const result = yield (0, Python_1.runPythonCode)(testCode);
+            if (result.output.stderr) {
+                results.push({
+                    input: inputParams,
+                    expected: expectedOutput[1],
+                    actual: null,
+                    passed: false,
+                    error: result.output.stderr
+                });
+                continue;
+            }
             const testResult = checkOutput(result.output.stdout);
             results.push({
                 input: inputParams,
@@ -192,7 +210,7 @@ const runTestCases = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         res.status(200).json({
             success: true,
-            results: results,
+            results: results.slice(0, Math.max(4, results.length)), // Limit to 4 results
             passedCount: results.filter(r => r.passed).length,
             totalCount: results.length
         });
@@ -204,44 +222,39 @@ const runTestCases = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.runTestCases = runTestCases;
 function generateTestCode(userCode, inputParams, expectedOutput, functionName = "Solution") {
     const args = inputParams.map(([type, value]) => {
-        if (type === 'string')
+        if (type === 'str')
             return `"${value}"`;
-        if (type === 'boolean')
-            return value.toLowerCase();
         return value;
     }).join(', ');
     // Convert expected value to proper Python literal
     let expectedValue;
     const [expectedType, expectedVal] = expectedOutput;
-    if (expectedType === 'string') {
+    if (expectedType === 'str') {
         expectedValue = `"${expectedVal}"`;
-    }
-    else if (expectedType === 'boolean') {
-        expectedValue = expectedVal.toLowerCase();
     }
     else {
         expectedValue = expectedVal;
     }
     return `
 ${userCode}
-
-# Test execution
-try:
-    actual_result = ${functionName}(${args})
-    expected_result = ${expectedValue}
-    
-    if actual_result == expected_result:
-        print(f"<RESULT>PASS</RESULT>")
-        print(f"<ACTUAL>{actual_result}</ACTUAL>")
-        print(f"<EXPECTED>{expected_result}</EXPECTED>")
-    else:
-        print(f"<RESULT>FAIL</RESULT>")
-        print(f"<ACTUAL>{actual_result}</ACTUAL>")
-        print(f"<EXPECTED>{expected_result}</EXPECTED>")
-        print(f"<ERROR>Expected {expected_result} but got {actual_result}</ERROR>")
-except Exception as e:
-    print(f"<RESULT>ERROR</RESULT>")
-    print(f"<ERROR>{str(e)}</ERROR>")
+if __name__ == "__main__":
+    # Test execution
+    try:
+        actual_result = ${functionName}(${args})
+        expected_result = ${expectedValue}
+        
+        if actual_result == expected_result:
+            print(f"<RESULT>PASS</RESULT>")
+            print(f"<ACTUAL>{actual_result}</ACTUAL>")
+            print(f"<EXPECTED>{expected_result}</EXPECTED>")
+        else:
+            print(f"<RESULT>FAIL</RESULT>")
+            print(f"<ACTUAL>{actual_result}</ACTUAL>")
+            print(f"<EXPECTED>{expected_result}</EXPECTED>")
+            print(f"<ERROR>Expected {expected_result} but got {actual_result}</ERROR>")
+    except Exception as e:
+        print(f"<RESULT>ERROR</RESULT>")
+        print(f"<ERROR>{str(e)}</ERROR>")
 `;
 }
 function checkOutput(actualOutput) {
@@ -249,7 +262,6 @@ function checkOutput(actualOutput) {
     const actualMatch = actualOutput.match(/<ACTUAL>(.*?)<\/ACTUAL>/);
     const expectedMatch = actualOutput.match(/<EXPECTED>(.*?)<\/EXPECTED>/);
     const errorMatch = actualOutput.match(/<ERROR>(.*?)<\/ERROR>/);
-    console.log("Checking output:", actualOutput);
     if (!resultMatch) {
         return { passed: false, error: "Invalid output format" };
     }
@@ -299,8 +311,23 @@ const seedQuestions = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Map the question data to match the model structure
         const formattedQuestions = questions_1.questions.map(q => (Object.assign({}, q)));
-        // Bulk create the questions
-        yield Question_1.default.bulkCreate(formattedQuestions);
+        formattedQuestions.map((question) => __awaiter(void 0, void 0, void 0, function* () {
+            const questionExists = (yield Question_1.default.findAll({ where: {
+                    type: question.type,
+                    topics: question.topics,
+                    options: question.options || [],
+                    answer: question.answer || "",
+                    testCases: question.testCases || [],
+                    solutionSignature: question.solutionSignature,
+                    hint: question.hint,
+                    difficulty: question.difficulty,
+                    explanation: question.explanation,
+                    text: question.text
+                } })).length > 0;
+            if (questionExists)
+                return;
+            yield Question_1.default.create(question);
+        }));
         console.log('✅ Successfully seeded questions!');
         return;
     }
