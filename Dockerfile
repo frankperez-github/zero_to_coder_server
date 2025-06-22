@@ -10,8 +10,8 @@ WORKDIR /zero_to_coder_server
 # Copy package.json and yarn.lock before running yarn install
 COPY package.json yarn.lock ./
 
-# Install dependencies (omit dev dependencies)
-RUN yarn install --production
+# Install dependencies
+RUN yarn install
 
 # Copy the entire project
 COPY . .
