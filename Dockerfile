@@ -28,4 +28,4 @@ EXPOSE 5000
 RUN ls -l /zero_to_coder_server/build-sandbox.sh
 
 # Build sandbox and then start the server
-CMD ["bash", "-c", "/zero_to_coder_server/build-sandbox.sh && yarn start"]
+CMD ["sh", "-c", "/zero_to_coder_server/build-sandbox.sh && yarn start"]
