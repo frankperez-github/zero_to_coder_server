@@ -5,6 +5,8 @@ CONTAINER_NAME="zero_to_coder_server"
 IMAGE_NAME="zero_to_coder_server"
 NETWORK_NAME="vm-net"
 
+docker volume create code-storage
+
 # Ensure the Docker network exists
 docker network inspect $NETWORK_NAME >/dev/null 2>&1 || docker network create $NETWORK_NAME
 
@@ -31,5 +33,7 @@ docker run -it \
   --network $NETWORK_NAME \
   -p 5000:5000 \
   --env-file .env \
+  -v code-storage:/shared-volume \
   -v "$(pwd)":/zero_to_coder_server \
+  -v /var/run/docker.sock:/var/run/docker.sock \
   $IMAGE_NAME

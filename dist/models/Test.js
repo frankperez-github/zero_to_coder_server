@@ -6,7 +6,7 @@ class Test extends sequelize_1.Model {
 }
 Test.init({
     id: { type: sequelize_1.DataTypes.UUID, primaryKey: true, allowNull: false, defaultValue: sequelize_1.DataTypes.UUIDV4 },
-    type: { type: sequelize_1.DataTypes.ENUM('sintax', 'logic'), allowNull: false },
+    type: { type: sequelize_1.DataTypes.ENUM('syntax', 'logic'), allowNull: false },
     topic: { type: sequelize_1.DataTypes.TEXT, allowNull: false },
     difficulty: { type: sequelize_1.DataTypes.ENUM('easy', 'medium', 'hard'), allowNull: false },
 }, {

@@ -5,9 +5,9 @@ import https from 'https';
 import fs from 'fs';
 import { connect } from './database';
 import userRoutes from './routes/Users';
-import testRoutes from './routes/Tests';
 import graphRoutes from './routes/Graph';
 import questionRoutes from './routes/Questions';
+import pythonRoutes from './routes/Python';
 import { seedQuestions } from './controllers/Questions';
 
 dotenv.config();
@@ -21,9 +21,9 @@ app.use(cors({
 
 // Routes
 app.use('/api/users', userRoutes);
-app.use('/api/tests', testRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/graph', graphRoutes);
+app.use('/api/python', pythonRoutes);
 
 
 // Sync Database & Start Server

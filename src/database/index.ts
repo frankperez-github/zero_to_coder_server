@@ -44,7 +44,7 @@ import User from '../models/User';
 
         if (!MYSQL_URI || !databaseName) {
             throw new Error(
-            'Please define the DB_HOST and DB_NAME environment variables inside .env'
+                'Please define the DB_HOST and DB_NAME environment variables inside .env'
             );
         }
 
@@ -54,7 +54,7 @@ import User from '../models/User';
             await sequelize.authenticate();
             console.log('Connected to MySQL');
 
-            await sequelize.sync({ alter: true });
+            await sequelize.sync({ alter: false });
 
             console.log('Models synchronized');
             connection.isConnected = 1;

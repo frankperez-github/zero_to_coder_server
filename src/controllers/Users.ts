@@ -57,3 +57,16 @@ export const addPassedTopic = async (req: UserRequest, res: Response) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+export const getPassedTopics = async (req: UserRequest, res: Response) => {
+    try {
+        const user = req.user;
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        res.status(200).json({topics: user.passedTopics});
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+}

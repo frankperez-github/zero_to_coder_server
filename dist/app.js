@@ -22,7 +22,7 @@ const Users_1 = __importDefault(require("./routes/Users"));
 const Tests_1 = __importDefault(require("./routes/Tests"));
 const Graph_1 = __importDefault(require("./routes/Graph"));
 const Questions_1 = __importDefault(require("./routes/Questions"));
-const auth_1 = __importDefault(require("./middlewares/auth"));
+const Python_1 = __importDefault(require("./routes/Python"));
 const Questions_2 = require("./controllers/Questions");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -33,9 +33,10 @@ app.use((0, cors_1.default)({
 }));
 // Routes
 app.use('/api/users', Users_1.default);
-app.use('/api/tests', auth_1.default, Tests_1.default);
-app.use('/api/questions', auth_1.default, Questions_1.default);
+app.use('/api/tests', Tests_1.default);
+app.use('/api/questions', Questions_1.default);
 app.use('/api/graph', Graph_1.default);
+app.use('/api/python', Python_1.default);
 // Sync Database & Start Server
 const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {

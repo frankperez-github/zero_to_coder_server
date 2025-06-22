@@ -8,11 +8,15 @@ import User from './User';
 class Question extends Model {
   public id!: string;
   public difficulty!: 'easy' | 'medium' | 'hard';
-  public type!: 'sintax' | 'logic';
+  public type!: 'syntax' | 'logic';
   public topics!: TopicType[];
   public text!: string;
   public options!: any;
   public answer!: string;
+  /* Eeach testcase has an array of [type, value] for each params and at last postion [return type, return value] */
+  public testCases!: [string, string][][]; 
+  public solutionSignature!: string; // e.g. "(param1: Type1, param2: Type2) -> ReturnType"
+
   public hint!: string;
   public explanation!: string;
   public doneByUsers!: string[]
@@ -25,7 +29,7 @@ Question.init(
   {
     id: { type: DataTypes.UUID, primaryKey: true, allowNull: false, defaultValue: DataTypes.UUIDV4 },
 
-    type: { type: DataTypes.ENUM('sintax', 'logic'), allowNull: false },
+    type: { type: DataTypes.ENUM('syntax', 'logic'), allowNull: false },
 
     topics: {
       type: DataTypes.JSON,
@@ -45,9 +49,11 @@ Question.init(
       }
     },
 
-    options: { type: DataTypes.JSON, allowNull: false },
-    answer: { type: DataTypes.TEXT, allowNull: false },
+    options: { type: DataTypes.JSON, allowNull: false, defaultValue: [] },
+    answer: { type: DataTypes.TEXT, allowNull: true, defaultValue: '' },
+    testCases: {type: DataTypes.JSON, allowNull: false, defaultValue: []},
     hint: { type: DataTypes.TEXT, allowNull: false },
+    solutionSignature: { type: DataTypes.STRING, allowNull: true },
     difficulty: { type: DataTypes.ENUM('easy', 'medium', 'hard'), allowNull: false },
     explanation: { type: DataTypes.TEXT, allowNull: false },
     text: { type: DataTypes.TEXT, allowNull: false },

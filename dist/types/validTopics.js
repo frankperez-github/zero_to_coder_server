@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.allowedTopics = void 0;
 exports.allowedTopics = [
-    'basic_sintax',
+    'basic_syntax',
     'data_types',
     'accumulators',
     'counters',

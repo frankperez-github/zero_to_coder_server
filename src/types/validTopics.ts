@@ -1,5 +1,5 @@
 export type TopicType =
-  | 'basic_sintax'
+  | 'basic_syntax'
   | 'data_types'
   | 'accumulators'
   | 'counters'
@@ -50,7 +50,7 @@ export type TopicType =
   | 'synchronization_handling';
 
 export const allowedTopics: TopicType[] = [
-  'basic_sintax',
+  'basic_syntax',
   'data_types',
   'accumulators',
   'counters',

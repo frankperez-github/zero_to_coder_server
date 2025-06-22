@@ -6,7 +6,7 @@ import UserRequest from '../types/userRequest';
 export const authMiddleware = async (req: UserRequest, res: Response, next: NextFunction): Promise<void> => {
     const token = req.header('Authorization');
     if (!token) {
-        res.status(401).json({ message: 'Access Denied' });
+        res.status(403).json({ message: 'Access Denied' });
         return;
     }
 
@@ -18,20 +18,20 @@ export const authMiddleware = async (req: UserRequest, res: Response, next: Next
             : (decoded as JwtPayload).id;
 
         if (!userId) {
-            res.status(401).json({ message: "Invalid token" });
+            res.status(403).json({ message: "Invalid token" });
             return;
         }
 
         const user = await User.findByPk(userId);
 
         if (!user) {
-            res.status(401).json({ message: "User not found" });
+            res.status(403).json({ message: "User not found" });
             return;
         }
 
         req.user = user;
         next();
     } catch (error) {
-        res.status(401).json({ message: "Invalid token" });
+        res.status(403).json({ message: "Invalid token" });
     }
 };

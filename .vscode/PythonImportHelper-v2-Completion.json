@@ -1,0 +1,235 @@
+[
+    {
+        "label": "print_function",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "lldb",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "lldb",
+        "description": "lldb",
+        "detail": "lldb",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 2,
+        "importPath": "code_storage.6b596435-0e49-413a-832f-222db8f069a2",
+        "description": "code_storage.6b596435-0e49-413a-832f-222db8f069a2",
+        "peekOfCode": "def Solution(a, b):\n    # Your code\n    return a + b\nif __name__ == \"__main__\":\n    # Test execution\n    try:\n        actual_result = Solution(2, 3)\n        expected_result = 5\n        if actual_result == expected_result:\n            print(f\"<RESULT>PASS</RESULT>\")",
+        "detail": "code_storage.6b596435-0e49-413a-832f-222db8f069a2",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 2,
+        "importPath": "code_storage.dc0517f3-ff71-44c0-be40-25a0957d6b5e",
+        "description": "code_storage.dc0517f3-ff71-44c0-be40-25a0957d6b5e",
+        "peekOfCode": "def Solution(a, b):\n    # Your code\n    return a + b\nif __name__ == \"__main__\":\n    # Test execution\n    try:\n        actual_result = Solution(2, 3)\n        expected_result = 5\n        if actual_result == expected_result:\n            print(f\"<RESULT>PASS</RESULT>\")",
+        "detail": "code_storage.dc0517f3-ff71-44c0-be40-25a0957d6b5e",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 2,
+        "importPath": "code_storage.user_script",
+        "description": "code_storage.user_script",
+        "peekOfCode": "def Solution(a, b):\n    # Your code\n    return a + b\nif __name__ == \"__main__\":\n    # Test execution\n    try:\n        actual_result = Solution(2, 3)\n        expected_result = 5\n        if actual_result == expected_result:\n            print(f\"<RESULT>PASS</RESULT>\")",
+        "detail": "code_storage.user_script",
+        "documentation": {}
+    },
+    {
+        "label": "current_thread",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def current_thread(debugger):\n  return debugger.GetSelectedTarget().GetProcess().GetSelectedThread()\ndef current_frame(debugger):\n  return current_thread(debugger).GetSelectedFrame()\ndef no_arg_cmd(debugger, cmd, print_error=True):\n  cast_to_void_expr = '(void) {}'.format(cmd)\n  evaluate_result = current_frame(debugger).EvaluateExpression(cast_to_void_expr)\n  # When a void function is called the return value type is 0x1001 which\n  # is specified in http://tiny.cc/bigskz. This does not indicate\n  # an error so we check for that value below.",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "current_frame",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def current_frame(debugger):\n  return current_thread(debugger).GetSelectedFrame()\ndef no_arg_cmd(debugger, cmd, print_error=True):\n  cast_to_void_expr = '(void) {}'.format(cmd)\n  evaluate_result = current_frame(debugger).EvaluateExpression(cast_to_void_expr)\n  # When a void function is called the return value type is 0x1001 which\n  # is specified in http://tiny.cc/bigskz. This does not indicate\n  # an error so we check for that value below.\n  kNoResult = 0x1001\n  result = evaluate_result.GetError()",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "no_arg_cmd",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def no_arg_cmd(debugger, cmd, print_error=True):\n  cast_to_void_expr = '(void) {}'.format(cmd)\n  evaluate_result = current_frame(debugger).EvaluateExpression(cast_to_void_expr)\n  # When a void function is called the return value type is 0x1001 which\n  # is specified in http://tiny.cc/bigskz. This does not indicate\n  # an error so we check for that value below.\n  kNoResult = 0x1001\n  result = evaluate_result.GetError()\n  is_success = not result.fail or result.value == kNoResult\n  if not is_success:",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "ptr_arg_cmd",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def ptr_arg_cmd(debugger, name, param, cmd, print_error=True):\n  if not param:\n    print(\"'{}' requires an argument\".format(name))\n    return (False, None, \"\")\n  param = '(void*)({})'.format(param)\n  return no_arg_cmd(debugger, cmd.format(param), print_error)\ndef print_handle(debugger, command_name, param, print_func):\n  value = current_frame(debugger).EvaluateExpression(param)\n  error = value.GetError()\n  if error.fail:",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "print_handle",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def print_handle(debugger, command_name, param, print_func):\n  value = current_frame(debugger).EvaluateExpression(param)\n  error = value.GetError()\n  if error.fail:\n    print(\"Error evaluating {}\\n{}\".format(param, error))\n    return (False, error, \"\")\n  # Attempt to print, ignoring visualizers if they are enabled\n  result = print_func(value.GetNonSyntheticValue())\n  if not result[0]:\n    print(\"{} cannot print a value of type {}\".format(command_name,",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "print_direct",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def print_direct(debugger, command_name, value):\n  CMD = \"_v8_internal_Print_Object((v8::internal::Address*)({}))\"\n  return ptr_arg_cmd(debugger, command_name, value, CMD.format(value))\ndef print_indirect(debugger, command_name, value):\n  CMD = \"_v8_internal_Print_Object(*(v8::internal::Object**)({}))\"\n  return ptr_arg_cmd(debugger, command_name, value, CMD.format(value))\nV8_LLDB_COMMANDS = []\ndef lldbCommand(fn):\n  V8_LLDB_COMMANDS.append(fn.__name__)\n  return fn",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "print_indirect",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def print_indirect(debugger, command_name, value):\n  CMD = \"_v8_internal_Print_Object(*(v8::internal::Object**)({}))\"\n  return ptr_arg_cmd(debugger, command_name, value, CMD.format(value))\nV8_LLDB_COMMANDS = []\ndef lldbCommand(fn):\n  V8_LLDB_COMMANDS.append(fn.__name__)\n  return fn\n#####################\n# lldb commands.    #\n#####################",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "lldbCommand",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def lldbCommand(fn):\n  V8_LLDB_COMMANDS.append(fn.__name__)\n  return fn\n#####################\n# lldb commands.    #\n#####################\n@lldbCommand\ndef job(debugger, param, *args):\n  \"\"\"Print a v8 heap object\"\"\"\n  ptr_arg_cmd(debugger, 'job', param, \"_v8_internal_Print_Object({})\")",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "job",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def job(debugger, param, *args):\n  \"\"\"Print a v8 heap object\"\"\"\n  ptr_arg_cmd(debugger, 'job', param, \"_v8_internal_Print_Object({})\")\n@lldbCommand\ndef jh(debugger, param, *args):\n  \"\"\"Print v8::internal::(Maybe)?(Direct|Indirect)?Handle value\"\"\"\n  def print_func(value):\n    # Indirect handles contain a location_.\n    field = value.GetValueForExpressionPath(\".location_\")\n    if field.IsValid():",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jh",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jh(debugger, param, *args):\n  \"\"\"Print v8::internal::(Maybe)?(Direct|Indirect)?Handle value\"\"\"\n  def print_func(value):\n    # Indirect handles contain a location_.\n    field = value.GetValueForExpressionPath(\".location_\")\n    if field.IsValid():\n      return print_indirect(debugger, 'jh', field.value)\n    # Direct handles contain a obj_.\n    field = value.GetValueForExpressionPath(\".obj_\")\n    if field.IsValid():",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jlh",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jlh(debugger, param, *args):\n  \"\"\"Print v8::(Maybe)?Local value\"\"\"\n  def print_func(value):\n    # After https://crrev.com/c/4335544, v8::MaybeLocal contains a local_.\n    field = value.GetValueForExpressionPath(\".local_\")\n    if field.IsValid():\n      value = field\n    # After https://crrev.com/c/4335544, v8::Local contains a location_.\n    field = value.GetValueForExpressionPath(\".location_\")\n    if field.IsValid():",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jl",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jl(debugger, param, *args):\n  \"\"\"Print v8::Local handle value\"\"\"\n  return jlh(debugger, param, *args)\n@lldbCommand\ndef jco(debugger, param, *args):\n  \"\"\"Print the code object at the given pc (default: current pc)\"\"\"\n  if not param:\n    param = str(current_frame(debugger).FindRegister(\"pc\").value)\n  ptr_arg_cmd(debugger, 'jco', param, \"_v8_internal_Print_Code({})\")\n@lldbCommand",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jco",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jco(debugger, param, *args):\n  \"\"\"Print the code object at the given pc (default: current pc)\"\"\"\n  if not param:\n    param = str(current_frame(debugger).FindRegister(\"pc\").value)\n  ptr_arg_cmd(debugger, 'jco', param, \"_v8_internal_Print_Code({})\")\n@lldbCommand\ndef jtt(debugger, param, *args):\n  \"\"\"Print the transition tree of a v8 Map\"\"\"\n  ptr_arg_cmd(debugger, 'jtt', param, \"_v8_internal_Print_TransitionTree({})\")\n@lldbCommand",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jtt",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jtt(debugger, param, *args):\n  \"\"\"Print the transition tree of a v8 Map\"\"\"\n  ptr_arg_cmd(debugger, 'jtt', param, \"_v8_internal_Print_TransitionTree({})\")\n@lldbCommand\ndef jst(debugger, *args):\n  \"\"\"Print the current JavaScript stack trace\"\"\"\n  no_arg_cmd(debugger, \"_v8_internal_Print_StackTrace()\")\n@lldbCommand\ndef jss(debugger, *args):\n  \"\"\"Skip the jitted stack on x64 to where we entered JS last\"\"\"",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jst",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jst(debugger, *args):\n  \"\"\"Print the current JavaScript stack trace\"\"\"\n  no_arg_cmd(debugger, \"_v8_internal_Print_StackTrace()\")\n@lldbCommand\ndef jss(debugger, *args):\n  \"\"\"Skip the jitted stack on x64 to where we entered JS last\"\"\"\n  frame = current_frame(debugger)\n  js_entry_sp = frame.EvaluateExpression(\n      \"v8::internal::Isolate::Current()->thread_local_top()->js_entry_sp_;\") \\\n       .GetValue()",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "jss",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def jss(debugger, *args):\n  \"\"\"Skip the jitted stack on x64 to where we entered JS last\"\"\"\n  frame = current_frame(debugger)\n  js_entry_sp = frame.EvaluateExpression(\n      \"v8::internal::Isolate::Current()->thread_local_top()->js_entry_sp_;\") \\\n       .GetValue()\n  sizeof_void = frame.EvaluateExpression(\"sizeof(void*)\").GetValue()\n  rbp = frame.FindRegister(\"rbp\")\n  rsp = frame.FindRegister(\"rsp\")\n  pc = frame.FindRegister(\"pc\")",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "bta",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def bta(debugger, *args):\n  \"\"\"Print stack trace with assertion scopes\"\"\"\n  func_name_re = re.compile(\"([^(<]+)(?:\\(.+\\))?\")\n  assert_re = re.compile(\n      \"^v8::internal::Per\\w+AssertType::(\\w+)_ASSERT, (false|true)>\")\n  thread = current_thread(debugger)\n  for frame in thread:\n    functionSignature = frame.GetDisplayFunctionName()\n    if functionSignature is None:\n      continue",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "setup_source_map_for_relative_paths",
+        "kind": 2,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "def setup_source_map_for_relative_paths(debugger):\n  # Copied from Chromium's tools/lldb/lldbinit.py.\n  # When relative paths are used for debug symbols, lldb cannot find source\n  # files. Set up a source map to point to V8's root.\n  this_dir = os.path.dirname(os.path.abspath(__file__))\n  source_dir = os.path.join(this_dir, os.pardir)\n  debugger.HandleCommand(\n    'settings set target.source-map ../.. ' + source_dir)\ndef __lldb_init_module(debugger, dict):\n  setup_source_map_for_relative_paths(debugger)",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    },
+    {
+        "label": "V8_LLDB_COMMANDS",
+        "kind": 5,
+        "importPath": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "description": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "peekOfCode": "V8_LLDB_COMMANDS = []\ndef lldbCommand(fn):\n  V8_LLDB_COMMANDS.append(fn.__name__)\n  return fn\n#####################\n# lldb commands.    #\n#####################\n@lldbCommand\ndef job(debugger, param, *args):\n  \"\"\"Print a v8 heap object\"\"\"",
+        "detail": "node_modules.node.node_modules.node-linux-x64.share.doc.node.lldb_commands",
+        "documentation": {}
+    }
+]
