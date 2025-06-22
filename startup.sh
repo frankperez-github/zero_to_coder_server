@@ -36,4 +36,5 @@ docker run -it \
   -v code-storage:/shared-volume \
   -v "$(pwd)":/zero_to_coder_server \
   -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /usr/bin/docker:/usr/bin/docker \
   $IMAGE_NAME
