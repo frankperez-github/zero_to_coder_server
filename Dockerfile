@@ -26,4 +26,4 @@ ENV PORT=5000
 EXPOSE 5000
 
 # Build sandbox and then start the server
-CMD ["bash", "-c", "/zero_to_coder_server/build-sandbox.sh && yarn start"]
+CMD ["bash", "-c", "./build-sandbox.sh && yarn start"]
