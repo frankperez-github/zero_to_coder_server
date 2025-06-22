@@ -26,4 +26,4 @@ ENV PORT=5000
 EXPOSE 5000
 
 # Build sandbox and then start the server
-CMD ["sh", "-c", "./build-sandbox.sh && yarn run dev"]
+CMD ["sh", "-c", "./build-sandbox.sh && yarn start"]
